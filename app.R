@@ -39,14 +39,14 @@ server <- function(input, output, session) {
           textOutput("login_msg")
       )
     } else {
-      div(class="embed-wrap", powerbi_embed)
+      div(class="embed-wrap", HTML(Sys.getenv('powerbi_embed')))
     }
   })
 
   # valida o login
   observeEvent(input$login_btn, {
-    if (identical(input$user, valid_user) &&
-        identical(input$pass, valid_pass)) {
+    if (identical(input$user, Sys.getenv('valid_user')) &&
+        identical(input$pass, Sys.getenv('valid_pass'))) {
       logged(TRUE)
     } else {
       output$login_msg <- renderText("Usuário ou senha incorretos.")
