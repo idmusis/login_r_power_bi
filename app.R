@@ -5,7 +5,6 @@ library(shiny)
 # valid_pass
 # powerbi_embed
 
-# interface de usuário
 ui <- fluidPage(
   tags$head(
     tags$style(HTML("
@@ -22,31 +21,27 @@ ui <- fluidPage(
   uiOutput("main_ui")
 )
 
-# lógica do servidor
 server <- function(input, output, session) {
-
-  # estado reativo de login
   logged <- reactiveVal(FALSE)
 
-  # renderiza a interface principal
   output$main_ui <- renderUI({
     if (!logged()) {
-      div(class="login-box",
-          h3("Login"),
-          textInput("user", "Usuário"),
-          passwordInput("pass", "Senha"),
-          actionButton("login_btn", "Entrar"),
-          textOutput("login_msg")
+      div(
+        class = "login-box",
+        h3("Login"),
+        textInput("user", "Usuário"),
+        passwordInput("pass", "Senha"),
+        actionButton("login_btn", "Entrar"),
+        textOutput("login_msg")
       )
     } else {
-      div(class="embed-wrap", HTML(Sys.getenv('powerbi_embed')))
+      div(class = "embed-wrap", HTML(Sys.getenv("powerbi_embed")))
     }
   })
 
-  # valida o login
   observeEvent(input$login_btn, {
-    if (identical(input$user, Sys.getenv('valid_user')) &&
-        identical(input$pass, Sys.getenv('valid_pass'))) {
+    if (identical(input$user, Sys.getenv("valid_user")) &&
+      identical(input$pass, Sys.getenv("valid_pass"))) {
       logged(TRUE)
     } else {
       output$login_msg <- renderText("Usuário ou senha incorretos.")
@@ -54,5 +49,4 @@ server <- function(input, output, session) {
   })
 }
 
-# executa o aplicativo
 shinyApp(ui, server)
