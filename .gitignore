@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+
+.bare/
+.worktrees/
+
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+Controle de versoes/
+Controle de versões/
+Controle de versão/
+Controle de versao/
